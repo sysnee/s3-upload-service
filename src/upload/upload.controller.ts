@@ -5,6 +5,8 @@ import {
     Body,
     UseInterceptors,
     BadRequestException,
+    HttpException,
+    Logger,
   } from '@nestjs/common';
   import { FileInterceptor } from '@nestjs/platform-express';
   import { S3Service } from './upload.service';
@@ -29,9 +31,11 @@ import {
       @Body('secretAccessKey') secretAccessKey: string,
       @Body('region') region: string,
       @Body('bucketName') bucketName: string,
+      @Body('fileName') fileName: string,
     ) {
       if (!file) {
-        throw new BadRequestException('File is missing');
+        Logger.error('File is missing')
+        throw new HttpException('File is missing', 400);
       }
   
       if (!accessKeyId || !secretAccessKey || !region || !bucketName) {
@@ -45,6 +49,7 @@ import {
           accessKeyId,
           secretAccessKey,
           region,
+          fileName
         );
   
         fs.unlinkSync(file.path);
@@ -54,6 +59,7 @@ import {
           url: result.Location,
         };
       } catch (error) {
+        Logger.error(error)
         throw new BadRequestException(error.message);
       }
     }

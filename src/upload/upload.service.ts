@@ -19,13 +19,14 @@ export class S3Service {
     accessKeyId: string,
     secretAccessKey: string,
     region: string,
+    fileName: string
   ): Promise<AWS.S3.ManagedUpload.SendData> {
     const s3 = this.getS3Instance(accessKeyId, secretAccessKey, region);
     const fileStream = fs.createReadStream(file.path);
 
     const uploadParams = {
       Bucket: bucketName,
-      Key: file.originalname,
+      Key: fileName || file.originalname,
       Body: fileStream,
     };
 
