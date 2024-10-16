@@ -6,37 +6,37 @@
 
 To start the service, run:
 
-\`\`\`bash
+```bash
 npm run start
-\`\`\`
+```
 
-This will start the service on the default port (usually 3000). You can adjust the port and other configurations in the \`src/main.ts\` or as part of your environment variables.
+This will start the service on the default port (usually 3000). You can adjust the port and other configurations in the `src/main.ts` or as part of your environment variables.
 
 ### API Endpoints
 
-#### POST \`/upload\`
+#### POST `/upload`
 
 Uploads a file to the specified S3 bucket.
 
-- **URL**: \`/upload\`
-- **Method**: \`POST\`
-- **Headers**: \`Content-Type: multipart/form-data\`
+- **URL**: `/upload`
+- **Method**: `POST`
+- **Headers**: `Content-Type: multipart/form-data`
 - **Body**:
 
 | Parameter         | Type        | Description                       |
 |-------------------|-------------|-----------------------------------|
-| \`file\`            | \`File\`      | The file to be uploaded           |
-| \`accessKeyId\`     | \`string\`    | AWS access key ID                 |
-| \`secretAccessKey\` | \`string\`    | AWS secret access key             |
-| \`region\`          | \`string\`    | AWS region (e.g., \`us-east-1\`)    |
-| \`bucketName\`      | \`string\`    | S3 bucket name                    |
-| \`fileName\`        | \`string\`    | Name for the file in the bucket   |
+| `file`            | `File`      | The file to be uploaded           |
+| `accessKeyId`     | `string`    | AWS access key ID                 |
+| `secretAccessKey` | `string`    | AWS secret access key             |
+| `region`          | `string`    | AWS region (e.g., `us-east-1`)    |
+| `bucketName`      | `string`    | S3 bucket name                    |
+| `fileName`        | `string`    | Name for the file in the bucket   |
 
 ### Frontend Usage Example
 
 You can use the following code snippet in your front-end (or any Node.js client) to upload a file to the service:
 
-\`\`\`javascript
+```javascript
 const axios = require('axios');
 const { createReadStream, unlinkSync } = require('fs');
 const FormData = require('form-data');
@@ -62,18 +62,18 @@ axios.post('http://localhost:3000/upload', formData, {
 .catch(error => {
   console.error('Error uploading file:', error.message);
 });
-\`\`\`
+```
 
 ### Response
 
 If the file is successfully uploaded, the response will be:
 
-\`\`\`json
+```json
 {
-  \"message\": \"File uploaded successfully\",
-  \"url\": \"https://bucket-name.s3.amazonaws.com/your-file-name\"
+  "message": "File uploaded successfully",
+  "url": "https://bucket-name.s3.amazonaws.com/your-file-name"
 }
-\`\`\`
+```
 
 ### Error Handling
 
